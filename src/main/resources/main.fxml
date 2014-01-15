@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="446.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8"
+      fx:controller="pl.aetas.bakspad.controllers.MainController">
+    <children>
+        <MenuBar fx:id="menuBar">
+            <menus>
+                <Menu text="File">
+                    <items>
+                        <MenuItem text="New"/>
+                        <MenuItem text="Open"/>
+                        <MenuItem text="Save"/>
+                        <MenuItem text="Save As"/>
+                        <SeparatorMenuItem  />
+                        <MenuItem text="Exit"/>
+                    </items>
+                </Menu>
+                <Menu text="JavaFX 2.0 Examples">
+                    <items>
+                        <MenuItem text="Text Example"/>
+                        <MenuItem text="Objects Example"/>
+                        <MenuItem text="Animation Example"/>
+                    </items>
+                </Menu>
+                <Menu text="Help">
+                    <items>
+                        <MenuItem text="Search" disable="true"/>
+                        <MenuItem text="Online Manual" visible="false"/>
+                        <SeparatorMenuItem />
+                        <MenuItem text="About"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <SplitPane dividerPositions="0.2932330827067669" focusTraversable="true">
+            <items>
+                <AnchorPane prefHeight="200.0" prefWidth="226.0" SplitPane.resizableWithParent="false">
+                    <children>
+                        <TableView xmlns:fx="http://javafx.com/fxml" fx:id="notesTable" editable="true"
+                                   prefHeight="354.0" prefWidth="226.0" AnchorPane.bottomAnchor="0.0"
+                                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <columns>
+                                <TableColumn prefWidth="86.0" text="Nazwa"/>
+                                <TableColumn prefWidth="140.0" text="Opis"/>
+                            </columns>
+                        </TableView>
+                    </children>
+                </AnchorPane>
+                <AnchorPane prefHeight="400.0" prefWidth="461.0">
+                    <children>
+                        <TextArea fx:id="contentTextArea" prefHeight="400.0" prefWidth="560.0"
+                                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                  AnchorPane.topAnchor="0.0"/>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+</VBox>

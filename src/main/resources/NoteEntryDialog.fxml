@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane prefHeight="135.0" prefWidth="313.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.aetas.bakspad.controllers.NoteEntryDialogController">
+
+    <children>
+        <Button fx:id="saveButton" layoutX="233.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleSaveButtonAction" text="Zapisz" />
+        <Button fx:id="cancelButton" layoutX="163.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleCancelButtonAction" text="Anuluj" />
+        <TextField fx:id="nameTextField" layoutX="93.0" layoutY="18.0" prefHeight="26.0" prefWidth="200.0" />
+        <TextField fx:id="descriptionTextField" layoutX="93.0" layoutY="53.0" prefHeight="26.0" prefWidth="200.0" />
+        <Label layoutX="37.0" layoutY="23.0" text="Nazwa:" />
+        <Label layoutX="37.0" layoutY="58.0" text="Opis:" />
+    </children>
+</Pane>
