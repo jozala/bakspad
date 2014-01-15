@@ -5,18 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 public class NoteEntryDialogController {
 
     private Stage parentStage;
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private TextField nameTextField;
@@ -34,13 +25,13 @@ public class NoteEntryDialogController {
     }
 
     @FXML
-    private void handleCancelButtonAction(ActionEvent event) {
+    public void handleCancelButtonAction(ActionEvent event) {
         finishedWithSave = false;
         parentStage.close();
     }
 
     @FXML
-    private void handleSaveButtonAction(ActionEvent event) {
+    public void handleSaveButtonAction(ActionEvent event) {
         finishedWithSave = true;
         parentStage.close();
     }

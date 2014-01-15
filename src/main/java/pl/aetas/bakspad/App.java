@@ -25,7 +25,6 @@ public class App extends Application {
         mainController.setNotesTable(new DataLoader(objectMapper).load());
         mainController.setStage(stage);
         stage.show();
-
     }
 
     @Override

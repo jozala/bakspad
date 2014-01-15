@@ -26,11 +26,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 public class MainController implements Initializable {
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
 
     @FXML // fx:id="contentTextArea"
     private TextArea contentTextArea;
@@ -67,25 +62,7 @@ public class MainController implements Initializable {
         addNoteMenuItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("NoteEntryDialog.fxml"));
-                try {
-                    fxmlLoader.load();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                final Parent noteEntryDialogRoot = fxmlLoader.getRoot();
-                Scene noteEntryDialogScene = new Scene(noteEntryDialogRoot);
-                Stage noteEntryDialogStage = new Stage(StageStyle.UTILITY);
-                noteEntryDialogStage.setScene(noteEntryDialogScene);
-                noteEntryDialogStage.initModality(Modality.APPLICATION_MODAL);
-                noteEntryDialogStage.setResizable(false);
-                noteEntryDialogStage.initOwner(stage);
-                final NoteEntryDialogController noteEntryDialogController = fxmlLoader.getController();
-                noteEntryDialogController.setStage(noteEntryDialogStage);
-                noteEntryDialogStage.showAndWait();
-                if (noteEntryDialogController.isFinishedWithSave()) {
-                    addNoteEntry(new NoteEntry(noteEntryDialogController.getNoteEntryName(), noteEntryDialogController.getNoteEntryDescription(), ""));
-                }
+                handleAddNewEntryAction(actionEvent);
             }
         });
         contextMenu.getItems().addAll(removeNoteMenuItem, addNoteMenuItem);
@@ -159,5 +136,34 @@ public class MainController implements Initializable {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    @FXML
+    public void handleAddNewEntryAction(ActionEvent actionEvent) {
+        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("NoteEntryDialog.fxml"));
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        final Parent noteEntryDialogRoot = fxmlLoader.getRoot();
+        Scene noteEntryDialogScene = new Scene(noteEntryDialogRoot);
+        Stage noteEntryDialogStage = new Stage(StageStyle.UTILITY);
+        noteEntryDialogStage.setScene(noteEntryDialogScene);
+        noteEntryDialogStage.initModality(Modality.APPLICATION_MODAL);
+        noteEntryDialogStage.setResizable(false);
+        noteEntryDialogStage.initOwner(stage);
+        final NoteEntryDialogController noteEntryDialogController = fxmlLoader.getController();
+        noteEntryDialogController.setStage(noteEntryDialogStage);
+        noteEntryDialogStage.showAndWait();
+        if (noteEntryDialogController.isFinishedWithSave()) {
+            addNoteEntry(new NoteEntry(noteEntryDialogController.getNoteEntryName(), noteEntryDialogController.getNoteEntryDescription(), ""));
+        }
+    }
+
+    @FXML
+    public void handleCloseApplicationAction(ActionEvent actionEvent) throws IOException {
+        saveFocusedNoteEntryNow();
+        System.exit(0);
     }
 }
