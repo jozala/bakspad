@@ -1,10 +1,10 @@
 package pl.aetas.bakspad.presentation;
 
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.TableCell;
+import javafx.scene.control.cell.TextFieldTableCell;
 import pl.aetas.bakspad.model.NoteEntry;
 
-public class NoteEntryTableCell extends TableCell<NoteEntry, String> {
+public class NoteEntryTableCell extends TextFieldTableCell<NoteEntry, String> {
 
 
     private final ContextMenu contextMenu;
@@ -25,8 +25,4 @@ public class NoteEntryTableCell extends TableCell<NoteEntry, String> {
     private String getString() {
         return getItem() == null ? "" : getItem();
     }
-
-
-
-
 }

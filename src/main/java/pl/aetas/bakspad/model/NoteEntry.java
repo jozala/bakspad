@@ -5,8 +5,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NoteEntry {
-    private final String name;
-    private final String description;
+    private String name;
+
+    private String description;
 
     private String content;
 
@@ -28,6 +29,14 @@ public class NoteEntry {
 
     public String getContent() {
         return content;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setContent(String content) {

@@ -129,7 +129,7 @@ public class MainController implements Initializable {
 
     public void saveFocusedNoteEntryNow() throws IOException {
         if(!notesTable.getSelectionModel().isEmpty()) {
-            new DataSaver(new ObjectMapper()).save(notesTable.getSelectionModel().getSelectedItem());
+                new DataSaver(new ObjectMapper()).save(notesTable.getSelectionModel().getSelectedItem());
         }
     }
 
@@ -165,5 +165,18 @@ public class MainController implements Initializable {
     public void handleCloseApplicationAction(ActionEvent actionEvent) throws IOException {
         saveFocusedNoteEntryNow();
         System.exit(0);
+    }
+
+    @FXML
+    public void handleNoteNameEditAction(TableColumn.CellEditEvent<NoteEntry, String> stCellEditEvent) throws IOException {
+        final NoteEntry noteEntryBeforeEdit = stCellEditEvent.getRowValue();
+        removeNoteEntry(noteEntryBeforeEdit);
+        noteEntryBeforeEdit.setName(stCellEditEvent.getNewValue());
+        addNoteEntry(noteEntryBeforeEdit);
+    }
+
+    public void handleNoteDescriptionEditAction(TableColumn.CellEditEvent<NoteEntry, String> stCellEditEvent) {
+        final NoteEntry noteEntryBeforeEdit = stCellEditEvent.getRowValue();
+        noteEntryBeforeEdit.setDescription(stCellEditEvent.getNewValue());
     }
 }

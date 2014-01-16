@@ -28,8 +28,8 @@
             <children>
             <TableView fx:id="notesTable" editable="true" prefHeight="354.0" prefWidth="226.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns:fx="http://javafx.com/fxml">
                 <columns>
-                    <TableColumn prefWidth="86.0" text="Nazwa" />
-                    <TableColumn prefWidth="140.0" text="Opis" />
+                    <TableColumn prefWidth="86.0" text="Nazwa" onEditCommit="#handleNoteNameEditAction" />
+                    <TableColumn prefWidth="140.0" text="Opis" onEditCommit="#handleNoteDescriptionEditAction" />
                 </columns>
             </TableView>
             </children>
