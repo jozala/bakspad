@@ -3,7 +3,10 @@ package pl.aetas.bakspad.presentation
 import pl.aetas.bakspad.spec.UnitSpec
 import javafx.scene.control.{TableCell, TableColumn, ContextMenu}
 import pl.aetas.bakspad.data.NoteFile
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class GenericCellFactoryTest extends UnitSpec {
 
   var genericCellFactory : GenericCellFactory = _

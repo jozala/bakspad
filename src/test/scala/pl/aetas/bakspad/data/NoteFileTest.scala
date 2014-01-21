@@ -11,7 +11,6 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class NoteFileTest extends UnitSpec {
 
-  val noteSample: Note = new Note("some-name", "some description", "content")
   val filename: String = "someFilename"
 
   var notDirtyNoteFile : NoteFile = _
@@ -20,6 +19,7 @@ class NoteFileTest extends UnitSpec {
 
   before {
     dataManipulator = mock[JsonDataManipulator]
+    val noteSample = new Note("some-name", "some description", "content")
     notDirtyNoteFile = new NoteFile(filename, noteSample, dataManipulator)
     dirtyNoteFile = new NoteFile(filename, noteSample, dataManipulator)
     dirtyNoteFile.setContent("changed content")

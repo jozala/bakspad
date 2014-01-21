@@ -3,7 +3,10 @@ package pl.aetas.bakspad.presentation
 import pl.aetas.bakspad.spec.UnitSpec
 import javafx.scene.control.ContextMenu
 import org.mockito.Mockito._
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class NoteFileTableCellTest extends UnitSpec {
 
   var noteFileTableCell: NoteFileTableCell = _
