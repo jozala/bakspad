@@ -4,7 +4,9 @@ package pl.aetas.bakspad.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class NoteEntry {
+import java.util.Objects;
+
+public class Note {
     private String name;
 
     private String description;
@@ -12,11 +14,11 @@ public class NoteEntry {
     private String content;
 
     @JsonCreator
-    public NoteEntry(@JsonProperty("name") final String name, @JsonProperty("description") final String description,
-                     @JsonProperty("content") final String content) {
-        this.name = name;
-        this.description = description;
-        this.content = content;
+    public Note(@JsonProperty("name") final String name, @JsonProperty("description") final String description,
+                @JsonProperty("content") final String content) {
+        this.name = Objects.requireNonNull(name);
+        this.description = Objects.requireNonNull(description);
+        this.content = Objects.requireNonNull(content);
     }
 
     public String getName() {
@@ -46,11 +48,13 @@ public class NoteEntry {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof NoteEntry)) return false;
+        if (!(o instanceof Note)) return false;
 
-        NoteEntry noteEntry = (NoteEntry) o;
+        Note note = (Note) o;
 
-        if (!name.equals(noteEntry.name)) return false;
+        if (!content.equals(note.content)) return false;
+        if (!description.equals(note.description)) return false;
+        if (!name.equals(note.name)) return false;
 
         return true;
     }

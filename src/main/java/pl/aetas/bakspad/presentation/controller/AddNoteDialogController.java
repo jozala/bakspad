@@ -1,11 +1,11 @@
-package pl.aetas.bakspad.controllers;
+package pl.aetas.bakspad.presentation.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class NoteEntryDialogController {
+public class AddNoteDialogController {
 
     private Stage parentStage;
 
@@ -46,14 +46,14 @@ public class NoteEntryDialogController {
         return finishedWithSave;
     }
 
-    public String getNoteEntryName() {
+    public String getNoteName() {
         if (!finishedWithSave) {
             throw new IllegalStateException("Add new entry dialog has been closed with cancel. Values should not be read.");
         }
         return nameTextField.getText();
     }
 
-    public String getNoteEntryDescription() {
+    public String getNoteDescription() {
         if (!finishedWithSave) {
             throw new IllegalStateException("Add new entry dialog has been closed with cancel. Values should not be read.");
         }
