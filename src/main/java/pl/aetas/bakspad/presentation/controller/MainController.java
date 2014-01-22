@@ -252,4 +252,17 @@ public class MainController implements Initializable {
         final MonologFX dialog = MonologFXBuilder.create().modal(true).type(MonologFX.Type.ERROR).message(message).build();
         dialog.showDialog();
     }
+
+    public void handleOpenAboutDialogAction(ActionEvent actionEvent) throws IOException {
+        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("about.fxml"));
+        fxmlLoader.load();
+        final Parent aboutDialogRoot = fxmlLoader.getRoot();
+        Scene aboutDialogScene = new Scene(aboutDialogRoot);
+        Stage aboutDialogStage = new Stage(StageStyle.DECORATED);
+        aboutDialogStage.setScene(aboutDialogScene);
+        aboutDialogStage.initModality(Modality.APPLICATION_MODAL);
+        aboutDialogStage.setResizable(false);
+        aboutDialogStage.initOwner(stage);
+        aboutDialogStage.show();
+    }
 }

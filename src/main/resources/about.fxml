@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<Pane xmlns:fx="http://javafx.com/fxml/1" prefHeight="203.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/8">
+    <children>
+        <Label layoutX="139.0" layoutY="19.0" style="-fx-font-size: 22;" text="Aetas BaksPad"/>
+        <Label layoutX="139.0" layoutY="60.0" text="Prosta aplikacja do notatek"/>
+        <Label layoutX="139.0" layoutY="93.0" text="Wersja:"/>
+        <Label layoutX="139.0" layoutY="118.0" text="Autor:"/>
+        <Label layoutX="139.0" layoutY="143.0" text="Kontakt:"/>
+        <Label layoutX="216.0" layoutY="93.0" text="0.2.0"/>
+        <Label layoutX="216.0" layoutY="118.0" text="Mariusz Józala"/>
+        <Label layoutX="216.0" layoutY="143.0" text="http://aetas.pl"/>
+        <Label layoutX="232.0" layoutY="182.0" text="Apache License 2.0">
+            <textFill>
+                <Color blue="0.7763158082962036" green="0.7763158082962036" red="0.7763158082962036"/>
+            </textFill>
+        </Label>
+        <ImageView xmlns:fx="http://javafx.com/fxml/1" fitHeight="109.0" fitWidth="108.0" layoutX="14.0" layoutY="39.0"
+                   xmlns="http://javafx.com/javafx/8">
+            <image>
+                <Image smooth="false" url="images/Direct-Action-rabbit2.png"/>
+            </image>
+        </ImageView>
+    </children>
+</Pane>
