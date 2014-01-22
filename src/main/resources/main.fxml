@@ -19,7 +19,7 @@
                 </Menu>
                 <Menu text="Pomoc">
                     <items>
-                        <MenuItem text="O BaksPad"/>
+                        <MenuItem text="O BaksPad" onAction="#handleOpenAboutDialogAction"/>
                     </items>
                 </Menu>
             </menus>

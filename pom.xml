@@ -4,7 +4,7 @@
 
     <groupId>bakspad</groupId>
     <artifactId>bakspad</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.0</version>
     <packaging>jar</packaging>
 
     <name>Aetas BaksPad</name>
@@ -13,7 +13,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <exec.mainClass>pl.aetas.bakspad.App</exec.mainClass>
-        <javafx.tools.ant.jar>${java.home}/../lib/ant-javafx.jar</javafx.tools.ant.jar>
     </properties>
 
     <dependencies>
