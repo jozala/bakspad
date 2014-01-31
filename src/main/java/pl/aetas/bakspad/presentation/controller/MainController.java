@@ -6,13 +6,19 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.web.HTMLEditor;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -40,7 +46,7 @@ public class MainController implements Initializable {
     private static final Path DATA_PATH = Paths.get("data");
 
     @FXML
-    private TextArea contentTextArea;
+    private HTMLEditor contentTextArea;
 
     @FXML
     private TableView<NoteFile> notesTable;
@@ -74,14 +80,12 @@ public class MainController implements Initializable {
         loadNotes();
         setCellsOnNotesTable();
         notesTable.setItems(notesList);
-        contentTextArea.textProperty().addListener(
-            new ChangeListener<String>() {
-                @Override
-                public void changed(ObservableValue<? extends String> observableValue, String oldContent, String newContent) {
-                    setContentOnSelectedNote(newContent);
-                }
+        contentTextArea.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                setContentOnSelectedNote(contentTextArea.getHtmlText());
             }
-        );
+        });
         notesTable.getSelectionModel().selectedItemProperty().addListener(
             new ChangeListener<NoteFile>() {
                 @Override
@@ -97,7 +101,7 @@ public class MainController implements Initializable {
     private void onNotesTableSelectionChangeAction(NoteFile newValue) {
         contentTextArea.setVisible(true);
         if (newValue != null) {
-            contentTextArea.setText(newValue.getContent());
+            contentTextArea.setHtmlText(newValue.getContent());
         }
     }
 
