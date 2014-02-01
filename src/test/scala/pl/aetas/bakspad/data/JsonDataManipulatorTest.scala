@@ -22,7 +22,7 @@ class JsonDataManipulatorTest extends IntegrationSpec {
   var jsonDataManipulator: JsonDataManipulator = null
   val testDataDirectory = Paths.get("test-data")
   val sampleNote: Note = new Note("some-name", "test description", "test content")
-  val noteFile: NoteFile = new NoteFile(filename, sampleNote, jsonDataManipulator)
+  val noteFile: NoteFile = NoteFile.loadedNoteFile(filename, sampleNote, jsonDataManipulator)
   val objectMapper: ObjectMapper = new ObjectMapper()
 
 
@@ -70,9 +70,9 @@ class JsonDataManipulatorTest extends IntegrationSpec {
     createFileWithNote("testfile3", note3)
     val noteFiles: util.Set[NoteFile] = jsonDataManipulator.load
     noteFiles should have size 3
-    noteFiles should contain (new NoteFile("testfile1", note1, jsonDataManipulator))
-    noteFiles should contain (new NoteFile("testfile2", note2, jsonDataManipulator))
-    noteFiles should contain (new NoteFile("testfile3", note3, jsonDataManipulator))
+    noteFiles should contain (NoteFile.loadedNoteFile("testfile1", note1, jsonDataManipulator))
+    noteFiles should contain (NoteFile.loadedNoteFile("testfile2", note2, jsonDataManipulator))
+    noteFiles should contain (NoteFile.loadedNoteFile("testfile3", note3, jsonDataManipulator))
   }
   
   it should "return empty collection when data directory does not exists" in {

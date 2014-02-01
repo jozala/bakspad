@@ -20,8 +20,8 @@ class NoteFileTest extends UnitSpec {
   before {
     dataManipulator = mock[JsonDataManipulator]
     val noteSample = new Note("some-name", "some description", "content")
-    notDirtyNoteFile = new NoteFile(filename, noteSample, dataManipulator)
-    dirtyNoteFile = new NoteFile(filename, noteSample, dataManipulator)
+    notDirtyNoteFile = NoteFile.loadedNoteFile(filename, noteSample, dataManipulator)
+    dirtyNoteFile = NoteFile.loadedNoteFile(filename, noteSample, dataManipulator)
     dirtyNoteFile.setContent("changed content")
   }
 

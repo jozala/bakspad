@@ -72,7 +72,7 @@ public class JsonDataManipulator {
                     @Override
                     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                         final Note note = objectMapper.readValue(file.toFile(), Note.class);
-                        final NoteFile noteFile = new NoteFile(file.getFileName().toString(), note, JsonDataManipulator.this);
+                        final NoteFile noteFile = NoteFile.loadedNoteFile(file.getFileName().toString(), note, JsonDataManipulator.this);
                         noteFiles.add(noteFile);
                         return FileVisitResult.CONTINUE;
                     }
