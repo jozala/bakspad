@@ -187,8 +187,10 @@ public class MainController implements Initializable {
         if (addNoteDialogController.isFinishedWithSave()) {
             Note newNote = new Note(addNoteDialogController.getNoteName(), addNoteDialogController.getNoteDescription(), "");
             String filename = jsonDataManipulator.createProperFilename(addNoteDialogController.getNoteName());
-            final NoteFile newNoteFile = new NoteFile(filename, newNote, jsonDataManipulator);
+            final NoteFile newNoteFile = NoteFile.newlyCreatedNoteFile(filename, newNote, jsonDataManipulator);
             notesList.add(newNoteFile);
+            notesTable.getSelectionModel().select(newNoteFile);
+            handleSaveSelectedNoteAction(null);
         }
     }
 

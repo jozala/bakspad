@@ -17,12 +17,20 @@ public class NoteFile {
     private boolean dirty;
     private final Set<NoteFileIsDirtyListener> isDirtyListeners;
 
-    public NoteFile(String filename, Note note, JsonDataManipulator jsonDataManipulator) {
+    private NoteFile(String filename, Note note, JsonDataManipulator jsonDataManipulator, boolean dirty) {
         this.filename = filename;
         this.note = note;
         this.jsonDataManipulator = jsonDataManipulator;
-        this.dirty = false;
+        this.dirty = dirty;
         isDirtyListeners = new HashSet<>();
+    }
+
+    public static NoteFile loadedNoteFile(String filename, Note note, JsonDataManipulator jsonDataManipulator) {
+        return new NoteFile(filename, note, jsonDataManipulator, false);
+    }
+
+    public static NoteFile newlyCreatedNoteFile(String filename, Note note, JsonDataManipulator jsonDataManipulator) {
+        return new NoteFile(filename, note, jsonDataManipulator, true);
     }
 
     public void setName(String name) {
