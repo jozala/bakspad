@@ -12,7 +12,7 @@
             <menus>
                 <Menu text="Plik">
                     <items>
-                        <MenuItem onAction="#handleAddNewEntryAction" text="Dodaj" />
+                        <MenuItem onAction="#handleAddNewNoteAction" text="Dodaj" />
                         <MenuItem onAction="#handleSaveSelectedNoteAction" text="Zapisz" />
                         <MenuItem onAction="#handleSaveAllNotesAction" text="Zapisz wszystkie" />
                         <SeparatorMenuItem />

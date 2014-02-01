@@ -79,4 +79,17 @@ public class JsonDataManipulator {
                 });
         return noteFiles;
     }
+
+    public String createProperFilename(String suggestedFilename) {
+        int number = 1;
+        if (Files.notExists(dataDirectoryPath.resolve(suggestedFilename))) {
+            return suggestedFilename;
+        }
+        while(Files.exists(dataDirectoryPath.resolve(suggestedFilename + "-" + number))) {
+            number++;
+        }
+        final String finalFilename = suggestedFilename + "-" + number;
+        LOGGER.info("Suggested filename {} could not have been used and has been changed to {}", suggestedFilename, finalFilename);
+        return finalFilename;
+    }
 }

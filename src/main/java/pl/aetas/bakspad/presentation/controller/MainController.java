@@ -80,7 +80,7 @@ public class MainController implements Initializable {
         loadNotes();
         setCellsOnNotesTable();
         notesTable.setItems(notesList);
-        contentTextArea.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<Event>() {
+        contentTextArea.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
                 setContentOnSelectedNote(contentTextArea.getHtmlText());
@@ -131,7 +131,7 @@ public class MainController implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
                 try {
-                    handleAddNewEntryAction(actionEvent);
+                    handleAddNewNoteAction(actionEvent);
                 } catch (IOException e) {
                     LOGGER.fatal("Could not load dialog for new note", e);
                     throw new IllegalStateException("Could not load dialog for new note", e);
@@ -168,8 +168,11 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void handleAddNewEntryAction(ActionEvent actionEvent) throws IOException {
+    public void handleAddNewNoteAction(ActionEvent actionEvent) throws IOException {
         final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("NoteEntryDialog.fxml"));
+        if (!checkAllNotesAreSaved("Niezapisane zmiany muszą zostać zapisane przed dodaniem nowej notatki.")) {
+            return;
+        }
         fxmlLoader.load();
         final Parent noteEntryDialogRoot = fxmlLoader.getRoot();
         Scene noteEntryDialogScene = new Scene(noteEntryDialogRoot);
@@ -183,33 +186,38 @@ public class MainController implements Initializable {
         noteEntryDialogStage.showAndWait();
         if (addNoteDialogController.isFinishedWithSave()) {
             Note newNote = new Note(addNoteDialogController.getNoteName(), addNoteDialogController.getNoteDescription(), "");
-            final NoteFile newNoteFile = new NoteFile(addNoteDialogController.getNoteName(), newNote, new JsonDataManipulator(new ObjectMapper(), DATA_PATH));
+            String filename = jsonDataManipulator.createProperFilename(addNoteDialogController.getNoteName());
+            final NoteFile newNoteFile = new NoteFile(filename, newNote, jsonDataManipulator);
             notesList.add(newNoteFile);
         }
     }
 
     @FXML
     public void handleCloseApplicationAction(ActionEvent actionEvent) {
-        checkForNotSavedNotes();
+        checkAllNotesAreSaved("Zamykanie programu. Niezapisane zmiany zostaną utracone!");
         System.exit(0);
     }
 
-    private void checkForNotSavedNotes() {
+    private boolean checkAllNotesAreSaved(String messageStart) {
         if (isAnyNoteDirty()) {
-            String message = "Niektóre notatki nie zostały zapisane:";
+            String message = messageStart;
+            message += "\nTe notatki nie zostały zapisane:";
             for (NoteFile noteFile :notesList) {
                 if (noteFile.isDirty()) {
                     message += "\n" + noteFile.getName();
                 }
             }
-            message += " \nCzy chcesz je zapisać przed zamknięciem programu?";
+            message += " \nCzy chcesz je teraz zapisać?";
             final MonologFX dialog = MonologFXBuilder.create().modal(true).type(MonologFX.Type.QUESTION).message(message).build();
             final MonologFXButton.Type returnedValue = dialog.showDialog();
             if (returnedValue == MonologFXButton.Type.YES) {
-                LOGGER.info("Saving files when closing application");
+                LOGGER.info("Saving dirty notes files");
                 handleSaveAllNotesAction(null);
+                return true;
             }
+            return false;
         }
+        return true;
     }
 
     private boolean isAnyNoteDirty() {
