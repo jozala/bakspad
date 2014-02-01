@@ -98,6 +98,23 @@ class JsonDataManipulatorTest extends IntegrationSpec {
     }
   }
 
+  "A JsonDataManipulator createProperFilename" should "return name with added number when file with suggested name already exists" in {
+    createFileWithNote("testfile", sampleNote)
+    val properFilename: String = jsonDataManipulator.createProperFilename("testfile")
+    properFilename should equal ("testfile-1")
+  }
+
+  it should "return name with consecutive number when file with suggested name with -1 already exists" in {
+    createFileWithNote("testfile", sampleNote)
+    createFileWithNote("testfile-1", sampleNote)
+    val properFilename: String = jsonDataManipulator.createProperFilename("testfile")
+    properFilename should equal ("testfile-2")
+  }
+
+  it should "return same filename as suggested when file with given suggested name does not exists" in {
+    val properFilename: String = jsonDataManipulator.createProperFilename("testfile")
+    properFilename should equal ("testfile")
+  }
 
 
   def createFileWithNote(filename: String, entry: Note): Unit = {
