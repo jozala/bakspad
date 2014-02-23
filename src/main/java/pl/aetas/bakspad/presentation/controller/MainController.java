@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -13,10 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.Modality;
@@ -38,6 +36,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -57,15 +56,20 @@ public class MainController implements Initializable {
     @FXML
     TableColumn<NoteFile, String> descriptionColumn;
 
+    @FXML
+    private TextField filterTextField;
+
     private Stage stage;
 
     private ObservableList<NoteFile> notesList;
+    private ObservableList<NoteFile> filteredNotesList;
 
     private JsonDataManipulator jsonDataManipulator;
 
 
     public MainController() {
         notesList = FXCollections.observableArrayList();
+        filteredNotesList = FXCollections.observableArrayList();
         jsonDataManipulator = new JsonDataManipulator(new ObjectMapper(), DATA_PATH);
     }
 
@@ -78,8 +82,10 @@ public class MainController implements Initializable {
 
         contentTextArea.setVisible(false);
         loadNotes();
+        keepFilteredNotesListInSync();
         setCellsOnNotesTable();
-        notesTable.setItems(notesList);
+        notesTable.setItems(filteredNotesList);
+        listenForFilterTextFieldChanges();
         contentTextArea.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
@@ -97,6 +103,72 @@ public class MainController implements Initializable {
 
 
     }
+
+    private void listenForFilterTextFieldChanges() {
+        filterTextField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                                String oldValue, String newValue) {
+
+                updateFilteredData();
+            }
+        });
+
+    }
+
+    private void keepFilteredNotesListInSync() {
+        filteredNotesList.addAll(notesList);
+        notesList.addListener(new ListChangeListener<NoteFile>() {
+            @Override
+            public void onChanged(ListChangeListener.Change<? extends NoteFile> change) {
+                updateFilteredData();
+            }
+        });
+
+    }
+
+    /**
+     * Updates the filteredData to contain all data from the masterData that
+     * matches the current filter.
+     */
+    private void updateFilteredData() {
+        filteredNotesList.clear();
+
+        for (NoteFile p : notesList) {
+            if (matchesFilter(p)) {
+                filteredNotesList.add(p);
+            }
+        }
+
+        // Must re-sort table after items changed
+        reapplyTableSortOrder();
+    }
+
+    private boolean matchesFilter(NoteFile noteFile) {
+        String filterString = filterTextField.getText();
+        if (filterString == null || filterString.isEmpty()) {
+            // No filter --> Add all.
+            return true;
+        }
+
+        String lowerCaseFilterString = filterString.toLowerCase();
+
+        if (noteFile.getName().toLowerCase().indexOf(lowerCaseFilterString) != -1) {
+            return true;
+        } else if (noteFile.getDescription().toLowerCase().indexOf(lowerCaseFilterString) != -1) {
+            return true;
+        }
+
+        return false; // Does not match
+    }
+
+    private void reapplyTableSortOrder() {
+        ArrayList<TableColumn<NoteFile, ?>> sortOrder = new ArrayList<>(notesTable.getSortOrder());
+        notesTable.getSortOrder().clear();
+        notesTable.getSortOrder().addAll(sortOrder);
+    }
+
+
 
     private void onNotesTableSelectionChangeAction(NoteFile newValue) {
         contentTextArea.setVisible(true);
