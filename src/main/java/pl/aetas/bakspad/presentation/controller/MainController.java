@@ -225,13 +225,18 @@ public class MainController implements Initializable {
     }
 
     public void removeNoteEntry(final NoteFile noteFile) {
-        notesList.remove(noteFile);
-        try {
-            noteFile.delete();
-        } catch (DeleteFailedException e) {
-            LOGGER.error("Deleting of note with name {} failed", noteFile.getName());
-            showErrorDialog("Wystąpił błąd podczas usuwania notatki. Zgłoś problem.");
-
+        final String message = "Czy na pewno chcesz usunąć tę notatkę (" + noteFile.getName() + ")?\nTej operacji nie można cofnąć.";
+        final MonologFX dialog = MonologFXBuilder.create().modal(true).type(MonologFX.Type.QUESTION).message(message).build();
+        final MonologFXButton.Type returnedValue = dialog.showDialog();
+        if (returnedValue == MonologFXButton.Type.YES) {
+            notesList.remove(noteFile);
+            try {
+                noteFile.delete();
+                LOGGER.info("Note deleted");
+            } catch (DeleteFailedException e) {
+                LOGGER.error("Deleting of note with name {} failed", noteFile.getName());
+                showErrorDialog("Wystąpił błąd podczas usuwania notatki. Zgłoś problem.");
+            }
         }
     }
 
