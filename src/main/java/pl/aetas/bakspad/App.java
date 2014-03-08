@@ -29,18 +29,16 @@ public class App extends Application {
             mainController = loader.getController();
             mainController.setStage(stage);
             stage.show();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             LOGGER.fatal("Something went really wrong. Closing application.", e);
-            stop();
+            MonologFX errorDialog = MonologFXBuilder.create().type(MonologFX.Type.ERROR).titleText("Poważny błąd programu")
+                    .message("Skontaktuj się z twórcą programu.").modal(true).build();
+            errorDialog.showDialog();
         }
     }
 
     @Override
     public void stop() throws Exception {
-        MonologFX errorDialog = MonologFXBuilder.create().type(MonologFX.Type.ERROR).titleText("Poważny błąd programu")
-                .message("Skontaktuj się z twórcą programu. Program zostanie zamknięty.").modal(true).build();
-
-        errorDialog.showDialog();
         mainController.handleCloseApplicationAction(new ActionEvent());
         super.stop();
     }
