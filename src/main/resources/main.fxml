@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.web.*?>
 
-<VBox prefHeight="446.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.aetas.bakspad.presentation.controller.MainController">
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="446.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/8" fx:controller="pl.aetas.bakspad.presentation.controller.MainController">
     <children>
         <MenuBar fx:id="menuBar">
             <menus>
@@ -31,7 +31,7 @@
                 <AnchorPane prefHeight="426.0" prefWidth="310.0" SplitPane.resizableWithParent="false">
                     <children>
                         <TextField fx:id="filterTextField" promptText="szukaj..." prefHeight="26.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                        <TableView fx:id="notesTable" editable="true" prefHeight="389.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0" xmlns:fx="http://javafx.com/fxml">
+                        <TableView xmlns:fx="http://javafx.com/fxml" fx:id="notesTable" editable="true" prefHeight="389.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0">
                             <columns>
                                 <TableColumn fx:id="nameColumn" onEditCommit="#handleNoteNameEditAction" prefWidth="130.0" text="Nazwa">
                                     <cellValueFactory>
@@ -48,7 +48,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane>
-                    <HTMLEditor fx:id="contentTextArea" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="400.0" prefWidth="560.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    <HTMLEditor fx:id="contentTextArea" prefHeight="400.0" prefWidth="560.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                 </AnchorPane>
             </items>
         </SplitPane>

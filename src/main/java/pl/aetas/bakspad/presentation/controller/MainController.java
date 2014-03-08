@@ -31,12 +31,14 @@ import pl.aetas.bakspad.exception.DeleteFailedException;
 import pl.aetas.bakspad.exception.SaveFailedException;
 import pl.aetas.bakspad.model.Note;
 import pl.aetas.bakspad.presentation.GenericCellFactory;
+import pl.aetas.bakspad.presentation.LocaleAwareStringComparator;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -80,6 +82,10 @@ public class MainController implements Initializable {
         assert nameColumn != null;
         assert descriptionColumn != null;
 
+        LocaleAwareStringComparator localeAwareStringComparator = new LocaleAwareStringComparator(Locale.getDefault());
+        nameColumn.setComparator(localeAwareStringComparator);
+        descriptionColumn.setComparator(localeAwareStringComparator);
+
         contentTextArea.setVisible(false);
         loadNotes();
         keepFilteredNotesListInSync();
@@ -93,12 +99,12 @@ public class MainController implements Initializable {
             }
         });
         notesTable.getSelectionModel().selectedItemProperty().addListener(
-            new ChangeListener<NoteFile>() {
-                @Override
-                public void changed(ObservableValue observableValue, NoteFile oldValue, NoteFile newValue) {
-                    onNotesTableSelectionChangeAction(newValue);
+                new ChangeListener<NoteFile>() {
+                    @Override
+                    public void changed(ObservableValue observableValue, NoteFile oldValue, NoteFile newValue) {
+                        onNotesTableSelectionChangeAction(newValue);
+                    }
                 }
-            }
         );
 
 
@@ -167,7 +173,6 @@ public class MainController implements Initializable {
         notesTable.getSortOrder().clear();
         notesTable.getSortOrder().addAll(sortOrder);
     }
-
 
 
     private void onNotesTableSelectionChangeAction(NoteFile newValue) {
@@ -281,7 +286,7 @@ public class MainController implements Initializable {
         if (isAnyNoteDirty()) {
             String message = messageStart;
             message += "\nTe notatki nie zostały zapisane:";
-            for (NoteFile noteFile :notesList) {
+            for (NoteFile noteFile : notesList) {
                 if (noteFile.isDirty()) {
                     message += "\n" + noteFile.getName();
                 }
@@ -300,7 +305,7 @@ public class MainController implements Initializable {
     }
 
     private boolean isAnyNoteDirty() {
-        for (NoteFile noteFile :notesList) {
+        for (NoteFile noteFile : notesList) {
             if (noteFile.isDirty()) {
                 return true;
             }
@@ -330,7 +335,7 @@ public class MainController implements Initializable {
 
     public void handleSaveAllNotesAction(ActionEvent actionEvent) {
         try {
-            for(NoteFile noteFile : notesList) {
+            for (NoteFile noteFile : notesList) {
                 noteFile.save();
             }
         } catch (SaveFailedException e) {
