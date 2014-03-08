@@ -12,7 +12,7 @@
         <Label layoutX="139.0" layoutY="93.0" text="Wersja:"/>
         <Label layoutX="139.0" layoutY="118.0" text="Autor:"/>
         <Label layoutX="139.0" layoutY="143.0" text="Kontakt:"/>
-        <Label layoutX="216.0" layoutY="93.0" text="0.4.0"/>
+        <Label layoutX="216.0" layoutY="93.0" text="0.4.1"/>
         <Label layoutX="216.0" layoutY="118.0" text="Mariusz Józala"/>
         <Label layoutX="216.0" layoutY="143.0" text="http://aetas.pl"/>
         <Label layoutX="232.0" layoutY="182.0" text="Apache License 2.0">
